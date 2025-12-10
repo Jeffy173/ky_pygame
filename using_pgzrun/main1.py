@@ -14,9 +14,7 @@ vx2=10
 vy1=5
 vy2=-15
 dt=1
-
 colors=["red","blue"]
-
 count=4
 
 def draw_circle(x,y,r,c,f=False):
@@ -46,17 +44,20 @@ def update():
     y1+=vy1*dt
     x2+=vx2*dt
     y2+=vy2*dt
+
     if (x1-r<0 and vx1<0) or (x1+r>800 and vx1>0):
         vx1*=-1
         colors.reverse()
-    if (y1-r < 0 and vy1 < 0) or (y1+r*count*2 > 600 and vy1 > 0):
-        vy1 *= -1
+
+    if (y1-r<0 and vy1<0) or (y1+r*count*2>600 and vy1>0):
+        vy1*=-1
 
     if (x2-r<0 and vx2<0) or (x2+r>800 and vx2>0):
         vx2*=-1
         colors.reverse()
-    if (y2-r < 0 and vy2 < 0) or (y2+r*count*2 > 600 and vy2 > 0):
-        vy2 *= -1
+    
+    if (y2-r<0 and vy2<0) or (y2+r*count*2>600 and vy2>0):
+        vy2*=-1
 
 print("game start")
 pgzrun.go()
