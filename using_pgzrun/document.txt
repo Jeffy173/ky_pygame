@@ -1,1 +1,2 @@
-main1.py:blue red fishball
+main1.py : blue red fishball
+Good.py : classes for different goods
