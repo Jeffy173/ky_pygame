@@ -33,6 +33,7 @@ def draw_goods(lst:List[Good]):
         good.draw()
 
 
+# test
 
 WIDTH = 800
 HEIGHT = 600
