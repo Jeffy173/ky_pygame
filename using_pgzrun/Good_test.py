@@ -8,7 +8,7 @@ TITLE = "title"
 
 c1=Circle(400,300,30,"red",True)
 c2=Circle(200,200,15,"blue",True)
-l1=Line(400,300,200,200,"black")
+l1=Line(400,300,200,200,"black",5)
 
 lst=[c1,c2,l1]
 

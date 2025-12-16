@@ -1,3 +1,4 @@
+import pygame
 import pgzrun
 from typing import List
 
@@ -18,15 +19,27 @@ class Circle(Good):
         else: screen.draw.circle((self.x,self.y),self.radius,self.color)
 
 class Line(Good):
-    def __init__(self,x1:int,y1:int,x2:int,y2:int,c):
+    def __init__(self,x1:int,y1:int,x2:int,y2:int,c:any,w:int=1):
         self.x1=x1
         self.y1=y1
         self.x2=x2
         self.y2=y2
         self.color=c
+        self.width=w
     
+    # @staticmethod
+    # def make_color(arg):
+    #     if isinstance(arg, tuple):
+    #         return arg
+    #     elif isinstance(arg, str):
+    #         # 将颜色字符串转换为RGB元组
+    #         return tuple(pygame.Color(arg))[:3]  # 只取RGB，忽略alpha
+    #     else:
+    #         return arg
+
     def draw(self):
-        screen.draw.line((self.x1,self.y1),(self.x2,self.y2),self.color)
+        # screen.draw.line((self.x1,self.y1),(self.x2,self.y2),self.color,self.width)
+        pygame.draw.line(screen.draw._surf,self.color,(self.x1,self.y1),(self.x2,self.y2),self.width)
 
 def draw_goods(lst:List[Good]):
     for good in lst:
