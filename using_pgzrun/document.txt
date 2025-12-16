@@ -2,3 +2,6 @@ main1.py : blue red fishball
 Good.py : classes for different goods
 Good_test.py : test Good.py
 Good_test2.py : just test Good but not import
+megalovania.mp3 : megalovania music
+pop.wav : pop sound
+music_test.py : test pygame music
