@@ -1,6 +1,6 @@
 import pgzrun
-from Good import Good,Circle,Line,draw_goods
-from Good import init as Good_init
+import Good
+from Good import Circle,Line,draw_goods
 
 WIDTH = 800
 HEIGHT = 600
@@ -13,7 +13,7 @@ l1=Line(400,300,200,200,"black",5)
 lst=[c1,c2,l1]
 
 def draw():
-    Good_init(screen)
+    Good.init(screen)
     screen.fill("white")
     draw_goods(lst)
 
