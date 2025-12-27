@@ -1,6 +1,14 @@
 import pygame
 import pgzrun
 
+
+# 操作      函数	                            说明
+# 暂停播放	pygame.mixer.music.pause()	        暂停当前音乐。
+# 继续播放	pygame.mixer.music.unpause()	    从暂停处继续播放。
+# 停止播放	pygame.mixer.music.stop()	        停止播放，之后若想播放需重新加载。
+# 音量淡出	pygame.mixer.music.fadeout(time)	在 time 毫秒内音量渐变为0后停止。
+# 检查状态	pygame.mixer.music.get_busy()	    返回是否正在播放音乐。
+
 # --- 音乐初始化与加载 (通常放在代码靠前的位置) ---
 # 注意：确保你的音乐文件（如bg_music.mp3）与Python脚本在同一目录下，或者使用正确的文件路径。
 pygame.mixer.init()  # 初始化混音器[citation:2]
@@ -40,19 +48,8 @@ class Line(Good):
         self.y2=y2
         self.color=c
         self.width=w
-    
-    # @staticmethod
-    # def make_color(arg):
-    #     if isinstance(arg, tuple):
-    #         return arg
-    #     elif isinstance(arg, str):
-    #         # 将颜色字符串转换为RGB元组
-    #         return tuple(pygame.Color(arg))[:3]  # 只取RGB，忽略alpha
-    #     else:
-    #         return arg
 
     def draw(self):
-        # screen.draw.line((self.x1,self.y1),(self.x2,self.y2),self.color,self.width)
         pygame.draw.line(screen.draw._surf,self.color,(self.x1,self.y1),(self.x2,self.y2),self.width)
 
 def draw_goods(lst:List[Good]):
