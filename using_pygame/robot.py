@@ -1,4 +1,9 @@
 # coding=utf-8
+
+# hide the outputed when import pygame
+import os
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"]="1"
+
 import pygame
 import sys
 import time
@@ -54,6 +59,7 @@ pygame.display.update()
 
 clock=pygame.time.Clock()
 running=True
+print("game start")
 while running:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -66,5 +72,6 @@ while running:
     pygame.display.update([big_circle.rect]+robot.rects)
     clock.tick(60)
 
+print("game end")
 pygame.quit()
 sys.exit()
