@@ -4,18 +4,18 @@ import sys
 import time
 import math
 
-# ³õÊ¼»¯Pygame
+# åˆå§‹åŒ–Pygame
 pygame.init()
 
-# ´´½¨ÓÎÏ·´°¿Ú
-screen=pygame.display.set_mode([800, 600])  # Éè¶¨´°¿Ú´óĞ¡[citation:8]
-pygame.display.set_caption("My Pygame")  # ÉèÖÃ´°¿Ú±êÌâ
+# åˆ›å»ºæ¸¸æˆçª—å£
+screen=pygame.display.set_mode([800, 600])  # è®¾å®šçª—å£å¤§å°[citation:8]
+pygame.display.set_caption("My Pygame")  # è®¾ç½®çª—å£æ ‡é¢˜
 
 t=0
 
 # screen.fill("white")
 
-# ÓÎÏ·Ö÷Ñ­»·
+# æ¸¸æˆä¸»å¾ªç¯
 running = True
 while running:
     for event in pygame.event.get():

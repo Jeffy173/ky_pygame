@@ -1,3 +1,4 @@
 template.py : run game without pgzrun
 Good.py : module to draw shape easily(without pgzrun)
 test1.py : test Good.py
+robot.py : use Good to rewrite template.py
