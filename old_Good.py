@@ -1,6 +1,7 @@
 """The module is to draw shapes with pygame easily. (without pgzero, kwargs)"""
 # by Jeffy
 
+import Color
 import pygame
 import math
 from typing import List,Tuple
@@ -28,7 +29,7 @@ class Point(Good):
         self.x=x
         self.y=y
         self.radius=radius
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.rect=None
     
     def draw(self)->None:
@@ -58,7 +59,7 @@ class Circle(Good):
         self.x=x
         self.y=y
         self.radius=radius
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.width=width
         self.filled=filled
         self.rect=None
@@ -91,7 +92,7 @@ class Line(Good):
         self.y1=y1
         self.x2=x2
         self.y2=y2
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.width=width
         self.rect=None
     
@@ -142,7 +143,7 @@ class Square(Good):
         self.x=x
         self.y=y
         self.side=side
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.radian=radian
         self.width=width
         self.filled=filled
@@ -186,7 +187,7 @@ class Rectangle(Good):
         self.y=y
         self.sidex=sidex
         self.sidey=sidey
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.radian=radian
         self.width=width
         self.filled=filled
@@ -233,7 +234,7 @@ class RegularPolygon(Good):
         self.y=y
         self.radius=radius
         self.n=n
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.radian=radian
         self.width=width
         self.filled=filled
@@ -270,7 +271,7 @@ class Polygon(Good):
     def __init__(self,points:List[Tuple[int,int]],color:any,width:int=1,filled:bool=False):
         if len(points)<3: raise ValueError("Polygon requires at least 3 points")
         self.points=points
-        self.color=color
+        self.color=Color.to_rgb(color)
         self.width=width
         self.filled=filled
         self.rect=None
