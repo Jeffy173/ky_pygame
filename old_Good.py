@@ -24,6 +24,26 @@ class Good:
     def center_spin(self,x:int,y:int,radian:float)->None:
         pass
 
+    def __str__(self):
+        items=self.__dict__.items()
+        cls_str=str(self.__class__).split("'")[1]
+        s=f"{cls_str}(\n"
+        for i in items:
+            if i[0]=="rect": continue
+            s+=f"    {i[0]}={i[1]},\n"
+        s+=")"
+        return s
+
+    def __repr__(self):
+        items=self.__dict__.items()
+        cls_str=str(self.__class__).split("'")[1]
+        s=f"{cls_str}(\n"
+        for i in items:
+            if i[0]=="rect": continue
+            s+=f"    {i[0]}={i[1]},\n"
+        s+=")"
+        return s
+
 class Point(Good):
     def __init__(self,x:int,y:int,radius:int,color:any):
         self.x=x
