@@ -7,14 +7,12 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import pygame
 import old_Good
+import old_Run_game
 import math
 from typing import List
 
-pygame.init()
-screen=pygame.display.set_mode([800, 600])
-pygame.display.set_caption("Robot Spin")
-old_Good.init(screen)
-# print(old_Good.Color.to_rgb("red"))
+old_Run_game.init(screen_size=[800,600],game_caption="robot_test_2")
+old_Good.init(old_Run_game.screen)
 
 class Robot:
     def __init__(self,x:int,y:int,radius:int,color:any,width:int):
@@ -30,7 +28,6 @@ class Robot:
         self.leg2=old_Good.Line(x,y+radius/4,x-radius*math.cos(2/3*math.pi),y+radius*math.sin(2/3*math.pi),color,width)
         self.goods:List[old_Good.Good]=[self.head,self.hand,self.leg1,self.leg2,self.body]
         self.rects=[]
-        print(self.head)
 
     def set_color(self,color:any)->None:
         self.color=color
@@ -53,26 +50,26 @@ class Robot:
     def draw(self)->None:
         self.rects=old_Good.draw_goods(self.goods)
 
-screen.fill("white")
 big_circle=old_Good.Circle(400,300,200,"black",1,False)
 robot=Robot(400,300,200,"blue",10)
-pygame.display.update()
 
-clock=pygame.time.Clock()
-running=True
-print("game start")
-while running:
+@old_Run_game.run
+def run():
+    prev_rects=[]
+    rects=[]
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            running=False
+            old_Run_game.running=False
 
-    screen.fill("white")
+    old_Run_game.screen.fill("white")
     robot.spin(0.01)
     big_circle.draw()
     robot.draw()
-    pygame.display.update([big_circle.rect]+robot.rects)
-    clock.tick(60)
+    rects=robot.rects+[big_circle.rect]
+    pygame.display.update(rects+prev_rects)
+    prev_rects=rects
+    old_Run_game.clock.tick(60)
 
-print("game end")
-pygame.quit()
-sys.exit()
+old_Run_game.screen.fill("white")
+pygame.display.update()
+run()

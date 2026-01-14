@@ -1,3 +1,4 @@
+# coding=utf-8
 """The module is to draw shapes with pygame easily. (without pgzero, kwargs)"""
 # by Jeffy
 
