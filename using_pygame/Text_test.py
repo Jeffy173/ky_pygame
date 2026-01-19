@@ -3,7 +3,14 @@ import Text
 import RunGame
 import time
 
-runner1=RunGame.Runner(screen_size=[800,600],game_caption="game1")
+runner1=RunGame.Runner(
+    screen_size=[800,600],
+    game_caption="game1",
+    clock_tick_framerate=60,
+    auto_quit=True,
+    auto_update=True,
+    auto_clock_tick=True
+)
 screen1:pygame.surface.Surface=None
 
 RunGame.Runner.PRINT=True
@@ -34,3 +41,5 @@ def run1():
 runner1.run()
 time.sleep(1)
 runner1.run()
+
+pygame.quit()
