@@ -1,5 +1,32 @@
-"""The module is to draw Text with pygame easily. (without pgzero)"""
-# by Jeffy
+"""The module is to draw Text with pygame easily. (without pgzero)
+
+Example:
+    >>> 
+    >>> import pygame
+    >>> import Text
+    >>>  
+    >>> pygame.init()
+    >>> screen=pygame.display.set_mode([800,600])
+    >>> Text.init(screen)
+    >>> 
+    >>> text=Text.Text(
+    >>>     x=400,
+    >>>     y=300,
+    >>>     text="Hello",
+    >>>     size=36,
+    >>>     color="red"
+    >>> )
+    >>> 
+    >>> # Draw to default surface
+    >>> text.draw()
+    >>> 
+    >>> # Update text
+    >>> text.set_text("World")
+    >>> text.set_color("blue")
+    >>> text.draw()
+
+Author: Jeffy
+"""
 
 import pygame
 from typing import Any,Tuple
@@ -23,7 +50,6 @@ class Text:
         """
         create a new Text object
         
-        :param self: object
         :param x: center pos_x
         :type x: int
         :param y: center pos_y
@@ -110,13 +136,13 @@ class Text:
     
     def draw(self,surface:pygame.surface.Surface|None=None)->None:
         """
-        draw the text
+        draw the text and update the rect 
         
         :param surface: surface, it will be default surface if not offer
         :type surface: pygame.surface.Surface | None
         """
         width,height=self.get_size()
-        if surface is None and Text.surface is None: raise ValueError("surface is still None, please offer aurface or call Text.init(surface) first")
+        if surface is None and Text.surface is None: raise ValueError("surface is still None, please offer a surface or call Text.init(surface) first")
         self.rect=(Text.surface if surface is None else surface).blit(
             source=self.text_surface,
             dest=(self.x-width/2,self.y-height/2),
