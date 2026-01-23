@@ -1,17 +1,22 @@
-"""The module is to draw shapes with pygame easily. (without pgzero)"""
-# by Jeffy
+# coding=utf-8
+"""
+The module is to draw shapes with pygame easily. (without pgzero)
+
+Author: Jeffy
+License: MIT
+"""
 
 import pygame
 import math
 from typing import List,Tuple
 
-def init(screen:any)->None:
-    Good.screen=screen
+def init(surface:pygame.surface.Surface|None)->None:
+    Good.surface=surface
 
 class Good:
-    screen:any=None
+    surface:pygame.surface.Surface=None
 
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         pass
 
     def move(self,x:int,y:int)->None:
@@ -27,9 +32,9 @@ class Good:
         items=self.__dict__.items()
         cls_str=str(self.__class__).split("'")[1]
         s=f"{cls_str}(\n"
-        for i in items:
-            if i[0]=="rect": continue
-            s+=f"    {i[0]}={i[1]},\n"
+        for k,v in items:
+            if k in ["rect","surface"]: continue
+            s+=f"    {k}={v},\n"
         s+=")"
         return s
 
@@ -37,9 +42,9 @@ class Good:
         items=self.__dict__.items()
         cls_str=str(self.__class__).split("'")[1]
         s=f"{cls_str}(\n"
-        for i in items:
-            if i[0]=="rect": continue
-            s+=f"    {i[0]}={i[1]},\n"
+        for k,v in items:
+            if k in ["rect","surface"]: continue
+            s+=f"    {k}={v},\n"
         s+=")"
         return s
 
@@ -51,10 +56,10 @@ class Point(Good):
         self.color=color
         self.rect=None
     
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.radius==0: return 
         self.rect=pygame.draw.circle(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             center=(self.x,self.y),
             radius=self.radius,
@@ -83,10 +88,10 @@ class Circle(Good):
         self.filled=filled
         self.rect=None
     
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0 and not self.filled: return 
         self.rect=pygame.draw.circle(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             center=(self.x,self.y),
             radius=self.radius,
@@ -115,10 +120,10 @@ class Line(Good):
         self.width=width
         self.rect=None
     
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0: return 
         self.rect=pygame.draw.line(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             start_pos=(self.x1,self.y1),
             end_pos=(self.x2,self.y2),
@@ -168,7 +173,7 @@ class Square(Good):
         self.filled=filled
         self.rect=None
 
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0 and not self.filled: return 
         if self.side==0: return 
         points=[]
@@ -178,7 +183,7 @@ class Square(Good):
             rad+=math.pi/2
             points.append((self.x+r*math.cos(rad),self.y+r*math.sin(rad)))
         self.rect=pygame.draw.polygon(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             points=points,
             width=0 if self.filled else self.width
@@ -212,7 +217,7 @@ class Rectangle(Good):
         self.filled=filled
         self.rect=None
 
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0 and not self.filled: return 
         if self.sidex==0 or self.sidey==0: return 
         r=math.hypot(self.sidex,self.sidey)/2
@@ -224,7 +229,7 @@ class Rectangle(Good):
             (self.x-r*math.cos(self.radian-rad),self.y-r*math.sin(self.radian-rad))
         ]
         self.rect=pygame.draw.polygon(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             points=points,
             width=0 if self.filled else self.width
@@ -259,12 +264,12 @@ class RegularPolygon(Good):
         self.filled=filled
         self.rect=None
 
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0 and not self.filled: return 
         if self.radius==0: return 
         points=[(self.x+self.radius*math.cos(2*i*math.pi/self.n+self.radian),self.y+self.radius*math.sin(2*i*math.pi/self.n+self.radian)) for i in range(self.n)]
         self.rect=pygame.draw.polygon(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             points=points,
             width=0 if self.filled else self.width
@@ -295,10 +300,10 @@ class Polygon(Good):
         self.filled=filled
         self.rect=None
 
-    def draw(self)->None:
+    def draw(self,surface:pygame.surface.Surface|None=None)->None:
         if self.width==0 and not self.filled: return 
         self.rect=pygame.draw.polygon(
-            surface=Good.screen,
+            surface=Good.surface if surface is None else surface,
             color=self.color,
             points=self.points,
             width=0 if self.filled else self.width
@@ -317,18 +322,18 @@ class Polygon(Good):
             new_points.append((x+r*math.cos(rad+radian),y+r*math.sin(rad+radian)))
         self.points=new_points
 
-def draw_goods(goods:List[Good])->List[pygame.Rect]:
+def draw_goods(goods:List[Good],surface:pygame.surface.Surface|None=None)->List[pygame.Rect]:
     rects=[]
     for good in goods:
         if good.rect is not None: rects.append(good.rect)
-        good.draw()
+        good.draw(surface)
         if good.rect is not None: rects.append(good.rect)
     return rects
 
-def draw_goods_and_update(goods:List[Good])->None:
+def draw_goods_and_update(goods:List[Good],surface:pygame.surface.Surface|None=None)->None:
     rects=[]
     for good in goods:
         if good.rect is not None: rects.append(good.rect)
-        good.draw()
+        good.draw(surface)
         if good.rect is not None: rects.append(good.rect)
     pygame.display.update(rects)

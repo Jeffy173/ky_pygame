@@ -2,7 +2,7 @@
 """The module is to play music and sound with pygame easily. (without pgzero)"""
 import pygame
 
-pygame.mixer.init()
+init=pygame.mixer.init
 
 # 操作      函数	                            说明
 # 暂停播放	pygame.mixer.music.pause()	        pause

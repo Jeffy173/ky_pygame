@@ -1,6 +1,3 @@
-template.py : run game without pgzrun
 Good.py : The module to draw shapes with pygame easily (without pgzero)
 Text.py : The module to draw Text with pygame easily (without pgzero)
 Music.py : The module to play music and sound with pygame easily (without pgzero)
-test1.py : test Good.py
-robot.py : use Good to rewrite template.py

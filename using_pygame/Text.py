@@ -41,38 +41,9 @@ def init(surface:pygame.surface.Surface)->None:
     Text.surface=surface
 
 class Text:
-    """
-    The class to draw text easily
-    """
     surface:pygame.surface.Surface|None=None
 
     def __init__(self,x:int,y:int,text:str,size:int,font_name:str|None=None,bold:bool=False,italic:bool=False,underline:bool=False,antialias:bool=False,color:Any="black",background_color:Any=None):
-        """
-        create a new Text object
-        
-        :param x: center pos_x
-        :type x: int
-        :param y: center pos_y
-        :type y: int
-        :param text: text to show
-        :type text: str
-        :param size: font size
-        :type size: int
-        :param font_name: font file or name
-        :type font_name: str | None
-        :param bold: big text
-        :type bold: bool
-        :param italic: spin text
-        :type italic: bool
-        :param underline: underline
-        :type underline: bool
-        :param antialias: without square border
-        :type antialias: bool
-        :param color: font color
-        :type color: Any
-        :param background_color: background color
-        :type background_color: Any
-        """
         self.font=pygame.font.Font(font_name,size)
         self.font.bold=bold
         self.font.italic=italic

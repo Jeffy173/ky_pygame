@@ -1,6 +1,11 @@
-from typing import Tuple
+# coding=utf-8
+"""
+This module is to change color str to rgb tuple.
+"""
 
-# 完整的Pygame颜色字典 (pygame.color.THECOLORS)
+from typing import Tuple,Union
+
+# pygame.color.THECOLORS
 to_rgb_tuple_dict={
     "aliceblue":(240,248,255),
     "antiquewhite":(250,235,215),
@@ -668,10 +673,10 @@ to_rgb_tuple_dict={
     "yellowgreen":(154,205,50),
 }
 
-def to_rgb(color:any):
+def to_rgb(color:Union[str,Tuple[int,int,int]])->Tuple[int,int,int]:
     if isinstance(color,str):
         result=to_rgb_tuple_dict.get(color,None)
-        if result is None: raise ValueError("color name does not exist")
+        if result is None: raise ValueError("color does not exist")
         return result
-    return color
-
+    if isinstance(color,Tuple[int,int,int]): return color
+    else: raise TypeError("color must be color str or rgb tuple")
