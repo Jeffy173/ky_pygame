@@ -87,7 +87,7 @@ class Text:
             self.text,
             self.antialias,
             Color.to_rgb(self.color),
-            Color.to_rgb(self.background_color)
+            None if self.background_color is None else Color.to_rgb(self.background_color)
         )
 
     def get_size(self)->Tuple[int,int]:
