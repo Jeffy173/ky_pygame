@@ -41,6 +41,25 @@ class Image:
             self.set_size(self.width,self.height)
         self.rect=None
 
+    def set_image(self,image_path:str,width:Union[int,None]=None,height:Union[int,None]=None):
+        self.image_surface=pygame.image.load(image_path)
+        if width is None and height is None:
+            self.width,self.height=self.image_surface.get_size()
+        else:
+            if width is None:
+                self.height=height
+                w,h=self.image_surface.get_size()
+                self.width=self.height*w//h
+            elif height is None:
+                self.width=width
+                w,h=self.image_surface.get_size()
+                self.height=self.width*h//w
+            else:
+                self.width=width
+                self.height=height
+            self.set_size(self.width,self.height)
+        self.rect=None
+
     def move(self,x:int,y:int)->None:
         self.x+=x
         self.y+=y

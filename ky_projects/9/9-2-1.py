@@ -1,6 +1,8 @@
 import os
 import sys
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0,os.path.dirname(__file__))
+script_dir=os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
 
 # block.s=20
 
@@ -55,7 +57,6 @@ snake_head=Image.Image(
     width=20,
     height=20
 )
-
 cookie=Image.Image(
     x=100,
     y=300,
@@ -63,20 +64,33 @@ cookie=Image.Image(
     width=20,
     height=20
 )
+direction=(1,0)
+move_tick=20
+now_move_tick=0
 
-direction="r"
+def snake_out(snake):
+    return not(snake.x>=0+10 and snake.x<=800-10 and  snake.y>=0+10 and snake.y<=600-10)
 
-# main loop(game)
+def eat_cookie(snake_head,cookie):
+    return snake_head.x==cookie.x and snake_head.y==cookie.y
+
 runner=RunGame.Runner(
     screen_size=[800,600],
     game_caption="snack",
     clock_tick_framerate=60,
     auto_update=False,
 )
+end_runner=RunGame.Runner(
+    screen_size=[800,600],
+    game_caption="snack_game_over",
+    clock_tick_framerate=60,
+    auto_update=False,
+)
 
+# main loop(game)
 @runner.set_on_start
 def on_start():
-    global screen
+    global screen,score
     screen=runner.screen
     Good.init(screen)
     Text.init(screen)
@@ -85,22 +99,35 @@ def on_start():
     pygame.display.update()
     bgmusic.play(-1)
 
+    score=0
+
 @runner.set_run_loop
 def run_loop():
-    global direction
+    global score,direction,now_move_tick,move_tick
     for event in runner.events:
         if event.type==pygame.KEYDOWN:
             # print(f"Key pressed:{pygame.key.name(event.key)}")
             if event.key==pygame.K_DOWN:
-                direction="d"
+                direction=(0,1)
             elif event.key==pygame.K_UP:
-                direction="u"
+                direction=(0,-1)
             elif event.key==pygame.K_LEFT:
-                direction="l"
+                direction=(-1,0)
             elif event.key==pygame.K_RIGHT:
-                direction="r"
+                direction=(1,0)
     screen.fill("black")
     # move
+    now_move_tick+=1
+    if now_move_tick==move_tick:
+        now_move_tick=0
+        snake_head.move(*(20*i for i in direction))
+        if snake_out(snake_head):
+            snake_head.move(*(-20*i for i in direction))
+            runner.end_running()
+        if eat_cookie(snake_head,cookie):
+            score+=1
+            pop.play()
+    # draw
     cookie.draw()
     snake_head.draw()
     pygame.display.update()
@@ -108,22 +135,33 @@ def run_loop():
 @runner.set_on_exit
 def on_exit():
     global screen
-    screen=None
     bgmusic.stop()
     heartbreak.play()
-    # snack_head change gray,fall in heartbreak_runtimes times
-    for i in range(heartbreak_runtimes):
-        RunGame.Runner.clock_tick(60)
 
+    snake_head.set_image("images/snake2.jpg",width=20,height=20)
+    screen.fill("black")
+    snake_head.draw()
+    pygame.display.update()
+    change_color_times=int(heartbreak_runtimes*0.4)
+    pygame.time.wait(int(change_color_times*1000/60))
+
+    rest=heartbreak_runtimes-change_color_times
+    t=rest*0.7
+    vy=-5
+    s=800 # s=vy*t+0.5*a*t**2
+    a=(s-vy*t)*2/(t**2)
+    for _ in range(rest):
+        vy+=a*1
+        snake_head.move(0,vy)
+        screen.fill("black")
+        snake_head.draw()
+        pygame.display.update()
+        RunGame.Runner.clock_tick(60)
+        
+    screen=None
+    end_runner.run()
 
 # game over
-end_runner=RunGame.Runner(
-    screen_size=[800,600],
-    game_caption="snack_game_over",
-    clock_tick_framerate=60,
-    auto_update=False,
-)
-
 @end_runner.set_on_start
 def end_on_start():
     end_runner.screen.fill("black")
@@ -147,10 +185,12 @@ def end_on_start():
 @end_runner.set_run_loop
 def end_run_loop():
     pass
+    # for event in end_runner.events:
+        # if event.type==pygame.MOUSEBUTTONUP and on_button(button)
+            # runner.run()
     
 @end_runner.set_on_exit
 def on_exit():
     endmusic.stop()
 
 runner.run()
-# end_runner.run()
